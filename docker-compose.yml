@@ -1,0 +1,15 @@
+services:
+  caddy:
+    build:
+      dockerfile: ./Dockerfile
+    volumes:
+      - "./Caddyfile:/etc/caddy/Caddyfile"
+      - "./ruleset:/ruleset"
+      - "./:/var/log/"
+    ports:
+      - 8080:80
+
+  juiceshop_prod:
+    image: bkimminich/juice-shop
+    ports:
+      - 3000:3000

@@ -1,0 +1,20 @@
+{
+        order coraza_waf first
+}
+
+:80 {
+        coraza_waf {
+                load_owasp_crs
+                directives `
+                   Include /ruleset/coraza.conf
+                   Include /ruleset/crs-setup.conf
+                   Include @owasp_crs/*.conf
+                   SecRuleEngine On
+                   SecAuditLogFormat JSON
+                   SecAuditLogType Serial
+                   SecAuditLogParts ABIJDEFHZ
+                   SecAuditLog /var/log/coraza_audit.json
+                `
+        }
+        reverse_proxy http://192.168.1.20:3000
+}
